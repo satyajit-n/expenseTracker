@@ -26,8 +26,9 @@ function onSubmit(e) {
       console.log(res);
     })
     .catch((err) => {
-      document.body.innerHTML =
-        document.body.innerHTML + "<h2>Something Went wrong<h2/>";
+      //   document.body.innerHTML =
+      //     document.body.innerHTML + "<h2>User Already Exists<h2/>";
+      window.alert("user Already Exists");
       console.log(err);
     });
 }
