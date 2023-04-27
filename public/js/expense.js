@@ -1,20 +1,21 @@
 const myFormExpenseAdd = document.getElementById("my-form-add-expense");
 
 myFormExpenseAdd.addEventListener("submit", onsubmitExpense);
-
 function onsubmitExpense(e) {
   e.preventDefault();
 
   const amount = document.getElementById("amount").value;
   const description = document.getElementById("description").value;
   const category = document.getElementById("category").value;
+  const userId = localStorage.getItem("token");
 
-  // console.log(category);
+  console.log(userId);
 
   let myObj = {
     amount: amount,
     description: description,
     category: category,
+    userId: userId,
   };
 
   axios
@@ -50,6 +51,7 @@ function onsubmitExpense(e) {
   }
 }
 function showExpenseOnLoad(expense) {
+  // console.log(expense.userId)
   const parentEle = document.getElementById("lisOfExpenseItem");
   const childEle = document.createElement("li");
   const delExpense = document.createElement("input");
@@ -79,10 +81,14 @@ function showExpenseOnLoad(expense) {
 }
 window.addEventListener("DOMContentLoaded", (e) => {
   e.preventDefault();
+  const token = localStorage.getItem("token");
   axios
-    .get("http://localhost:3000/expense/get-expense")
+    .get("http://localhost:3000/expense/get-expense", {
+      headers: { Authorization: token },
+    })
     .then((res) => {
-      console.log(res);
+      // console.log(res.data.allExpenses[2].userId);
+      // console.log(localStorage.getItem("userId"));
       for (var i = 0; i < res.data.allExpenses.length; i++) {
         showExpenseOnLoad(res.data.allExpenses[i]);
       }

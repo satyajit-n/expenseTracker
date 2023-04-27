@@ -41,35 +41,6 @@
       <ul class="items" id="lisOfItems"></ul>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-    <script>
-      const myFormLogIn = document.querySelector("#my-form-login");
-
-      myFormLogIn.addEventListener("submit", onSubmitLogIn);
-
-      function onSubmitLogIn(e) {
-        e.preventDefault();
-
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-
-        let myObj = {
-          email: email,
-          password: password,
-        };
-
-        axios
-          .post("http://localhost:3000/expense-user/login", myObj)
-          .then((res) => {
-            alert(res.data.message);
-            if (res.data.message === "User login successfully") {
-              window.location.href = "http://127.0.0.1:5500/views/expense.html";
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            document.body.innerHTML += `<div style="color:red;">${err.message}</div>`;
-          });
-      }
-    </script>
+    <script src="../public/js/login.js"></script>
   </body>
 </html>

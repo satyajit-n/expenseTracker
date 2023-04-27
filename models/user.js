@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 
 const sequelize = require("../util/database");
 
-const ExpenseUser = sequelize.define("expense-user", {
+const User = sequelize.define("user", {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -18,4 +18,4 @@ const ExpenseUser = sequelize.define("expense-user", {
   password: Sequelize.STRING,
 });
 
-module.exports = ExpenseUser;
+module.exports = User;
