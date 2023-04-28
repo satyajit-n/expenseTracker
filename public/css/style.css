@@ -135,3 +135,17 @@ input::-webkit-inner-spin-button {
   padding: 5px;
   margin: 5px;
 }
+
+.btnpremium {
+  display: block;
+  float: right;
+  padding: 0.3rem;
+  margin: 0.2%;
+  border-radius: 5px;
+  border-style: groove;
+  
+}
+
+.btnpremium:hover {
+  background: #a19999;
+}

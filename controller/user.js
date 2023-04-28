@@ -2,7 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-exports.addUser = async (req, res, next) => {
+const addUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
@@ -36,7 +36,14 @@ function generateAccessToken(id, name) {
   );
 }
 
-exports.login = async (req, res, next) => {
+const token = function createToken(id, isPremium) {
+  return jwt.sign(
+    { userId: id, isPremium: isPremium },
+    "1e1389b8ea8f785e02def4dd5783b2d0883aa2c2af4b456de19da9b8f5b0e36e"
+  );
+};
+
+const  login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const emailExist = await User.findOne({
@@ -52,7 +59,10 @@ exports.login = async (req, res, next) => {
         if (result === true) {
           res.status(200).json({
             message: "User login successfully",
-            token: generateAccessToken(emailExist.dataValues.id,emailExist.dataValues.name),
+            token: generateAccessToken(
+              emailExist.dataValues.id,
+              emailExist.dataValues.name
+            ),
           });
         } else {
           res.status(401).json({ message: "Password is incorrect" });
@@ -65,3 +75,5 @@ exports.login = async (req, res, next) => {
     console.log(err);
   }
 };
+
+module.exports = { token, addUser, login };
