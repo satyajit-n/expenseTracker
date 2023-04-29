@@ -143,9 +143,39 @@ input::-webkit-inner-spin-button {
   margin: 0.2%;
   border-radius: 5px;
   border-style: groove;
-  
 }
 
 .btnpremium:hover {
   background: #a19999;
+}
+
+.parapremium {
+  float: right;
+  font-size: large;
+  display: block;
+}
+.leaderboard-button {
+  border-style: groove;
+  border-radius: 5px;
+  width: 20%;
+  outline-style: auto;
+  outline-color:rgb(59, 65, 244)
+}
+
+.leaderboard-button:hover{
+  background-color: rgb(110, 114, 242);
+  color: #f4f4f4;
+}
+
+.delbutton {
+  /* float: right; */
+  margin-left: 10%;
+  width: 20%;
+  outline-style: auto;
+  outline-color: red;
+}
+
+.delbutton:hover {
+  background-color: red;
+  color: #f4f4f4;
 }

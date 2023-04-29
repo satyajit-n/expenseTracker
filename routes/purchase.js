@@ -15,4 +15,10 @@ router.post(
   purchaseController.updateTransactionStatus
 );
 
+router.post(
+  "/updatestatusfailure",
+  authenticateMiddleware.authenticate,
+  purchaseController.updatestatusfailure
+);
+
 module.exports = router;

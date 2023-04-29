@@ -43,7 +43,7 @@ const token = function createToken(id, isPremium) {
   );
 };
 
-const  login = async (req, res, next) => {
+const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const emailExist = await User.findOne({
@@ -76,4 +76,19 @@ const  login = async (req, res, next) => {
   }
 };
 
-module.exports = { token, addUser, login };
+const getUser = async (req, res, next) => {
+  try {
+    const isPremium = await User.findOne({
+      where: { isPremium: 1, id: req.user.id },
+    });
+    if (isPremium) {
+      res.status(200).json({ isPremium: true });
+    } else {
+      res.status(200).json({ isPremium: false });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { token, addUser, login, getUser };
