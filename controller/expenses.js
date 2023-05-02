@@ -1,5 +1,6 @@
 const Expenses = require("../models/expenses");
 const User = require("../models/user");
+const sequelize = require("../util/database");
 
 const jwt = require("jsonwebtoken");
 
@@ -11,23 +12,32 @@ function generateAccessToken(id, name) {
 }
 
 exports.addExpense = async (req, res, next) => {
+  const t = await sequelize.transaction();
   try {
     const { amount, description, category } = req.body;
     const userId = req.user.id;
-    const expense = await Expenses.create({
-      amount: amount,
-      description: description,
-      category: category,
-      userId: userId,
-    });
+    const expense = await Expenses.create(
+      {
+        amount: amount,
+        description: description,
+        category: category,
+        userId: userId,
+      },
+      { transaction: t }
+    );
     const total_cost = Number(req.user.total_cost) + Number(amount);
     const data = await User.update(
       { total_cost: total_cost },
-      { where: { id: userId } }
-    );
+      { where: { id: userId }, transaction: t }
+    ).catch((err) => {
+      throw new Error(err);
+    });
+    await t.commit();
     res.status(201).json({ newExpenseDetails: expense });
   } catch (err) {
+    await t.rollback();
     console.log(err);
+    res.status(500).json({ error: err });
   }
 };
 
@@ -43,12 +53,30 @@ exports.getExpenses = async (req, res, next) => {
 };
 
 exports.deleteExpense = async (req, res, next) => {
+  const t = await sequelize.transaction();
   try {
     const eId = req.params.id;
-    // console.log(eId);
-    await Expenses.destroy({ where: { id: eId } });
-    res.sendStatus(200);
+    const amount = await Expenses.findOne({
+      where: { id: eId },
+    });
+    const data = await Expenses.destroy({
+      where: { id: eId, userId: req.user.id },
+      transaction: t,
+    });
+    const total_cost = Number(req.user.total_cost) - Number(amount.amount);
+    await User.update(
+      { total_cost: total_cost },
+      { where: { id: req.user.id }, transaction: t }
+    );
+    await t.commit();
+    if (data === 0) {
+      return res
+        .status(404)
+        .json({ message: "Expense doesn't belong to user" });
+    }
+    res.status(200).json({ message: "Successfully Deleted" });
   } catch (err) {
+    await t.rollback();
     console.log(err);
   }
 };

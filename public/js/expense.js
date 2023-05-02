@@ -23,7 +23,7 @@ function onsubmitExpense(e) {
       headers: { Authorization: token },
     })
     .then((res) => {
-      console.log(res)
+      console.log(res);
       showExpenseDetails(res.data.newExpenseDetails);
       window.location.reload();
     })
@@ -71,6 +71,7 @@ function showExpenseOnLoad(expense) {
   const parentEle = document.getElementById("lisOfExpenseItem");
   const childEle = document.createElement("li");
   const delExpense = document.createElement("input");
+  const token = localStorage.getItem("token");
 
   childEle.className = "li";
 
@@ -86,8 +87,11 @@ function showExpenseOnLoad(expense) {
 
   delExpense.onclick = () => {
     axios
-      .delete(`http://localhost:3000/expense/delete-expense/${expense.id}`)
+      .delete(`http://localhost:3000/expense/delete-expense/${expense.id}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
+        console.log(res);
         window.location.reload();
       })
       .catch((err) => {
