@@ -1,4 +1,3 @@
-
 const myFormExpenseAdd = document.getElementById("my-form-add-expense");
 
 myFormExpenseAdd.addEventListener("submit", onsubmitExpense);
@@ -8,20 +7,23 @@ function onsubmitExpense(e) {
   const amount = document.getElementById("amount").value;
   const description = document.getElementById("description").value;
   const category = document.getElementById("category").value;
-  const userId = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-  console.log(userId);
+  // console.log(userId);
 
   let myObj = {
     amount: amount,
     description: description,
     category: category,
-    userId: userId,
+    userId: token,
   };
 
   axios
-    .post("http://localhost:3000/expense/add-expense", myObj)
+    .post("http://localhost:3000/expense/add-expense", myObj, {
+      headers: { Authorization: token },
+    })
     .then((res) => {
+      console.log(res)
       showExpenseDetails(res.data.newExpenseDetails);
       window.location.reload();
     })

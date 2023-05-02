@@ -60,7 +60,7 @@ exports.updateTransactionStatus = async (req, res, next) => {
     //   // token: UserController.createToken(userId, true),
     // });
   } catch (err) {
-    res.status(403).json({ success: false });
+    res.status (403).json({ success: false });
     console.log(err);
   }
 };

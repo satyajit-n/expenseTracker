@@ -8,7 +8,7 @@ const addExpenseAuthentication = require("../middleware/authAddExpense");
 
 router.post(
   "/add-expense",
-  addExpenseAuthentication.authenticateAddExpense,
+  userAuthentication.authenticate,
   expenseController.addExpense
 );
 

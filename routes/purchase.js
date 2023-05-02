@@ -12,12 +12,20 @@ router.get(
 router.post(
   "/updatetransactionstatus",
   authenticateMiddleware.authenticate,
+  (req, res, next) => {
+    console.log("req==========================>", req);
+    next();
+  },
   purchaseController.updateTransactionStatus
 );
 
 router.post(
   "/updatestatusfailure",
   authenticateMiddleware.authenticate,
+  (req, res, next) => {
+    console.log("req==========================>", req);
+    next();
+  },
   purchaseController.updatestatusfailure
 );
 

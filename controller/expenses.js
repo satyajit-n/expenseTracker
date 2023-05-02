@@ -1,4 +1,5 @@
 const Expenses = require("../models/expenses");
+const User = require("../models/user");
 
 const jwt = require("jsonwebtoken");
 
@@ -13,13 +14,18 @@ exports.addExpense = async (req, res, next) => {
   try {
     const { amount, description, category } = req.body;
     const userId = req.user.id;
-    const data = await Expenses.create({
+    const expense = await Expenses.create({
       amount: amount,
       description: description,
       category: category,
       userId: userId,
     });
-    res.status(201).json({ newExpenseDetails: data });
+    const total_cost = Number(req.user.total_cost) + Number(amount);
+    const data = await User.update(
+      { total_cost: total_cost },
+      { where: { id: userId } }
+    );
+    res.status(201).json({ newExpenseDetails: expense });
   } catch (err) {
     console.log(err);
   }
