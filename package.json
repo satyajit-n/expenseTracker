@@ -25,6 +25,7 @@
     "mysql2": "^3.2.0",
     "pug": "^2.0.3",
     "razorpay": "^2.8.6",
-    "sequelize": "^6.31.0"
+    "sequelize": "^6.31.0",
+    "sib-api-v3-sdk": "^8.5.0"
   }
 }

@@ -12,8 +12,12 @@ function onSubmitForgetPassword(e) {
   };
 
   axios
-    .post("http://localhost:3000/password/forgotpassword", myObj)
-    .then((res) => {})
+    .post("http://localhost:3000/password/forget-password", myObj)
+    .then((res) => {
+      console.log(res);
+      alert(res.data.message);
+      window.location.reload();
+    })
     .catch((err) => {
       console.log(err);
       document.body.innerHTML += `<div style="color:red;">${err.message}</div>`;
