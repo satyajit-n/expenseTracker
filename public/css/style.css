@@ -42,6 +42,11 @@ a {
   background: #f4f4f4;
 }
 
+#my-form-forgotPassword {
+  padding: 2rem;
+  background: #f4f4f4;
+}
+
 #my-form-signup {
   padding: 2rem;
   background: #f4f4f4;
@@ -93,6 +98,26 @@ a {
   margin-bottom: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
+}
+
+#my-form-forgotPassword input[type="email"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#my-form-forgotPassword input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#my-form-forgotPassword label {
+  display: block;
 }
 
 #my-form-signup input[type="password"] {
@@ -159,10 +184,10 @@ input::-webkit-inner-spin-button {
   border-radius: 5px;
   width: 20%;
   outline-style: auto;
-  outline-color:rgb(59, 65, 244)
+  outline-color: rgb(59, 65, 244);
 }
 
-.leaderboard-button:hover{
+.leaderboard-button:hover {
   background-color: rgb(110, 114, 242);
   color: #f4f4f4;
 }
