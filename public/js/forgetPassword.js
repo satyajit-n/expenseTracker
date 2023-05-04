@@ -20,6 +20,7 @@ function onSubmitForgetPassword(e) {
     })
     .catch((err) => {
       console.log(err);
+      alert(err);
       document.body.innerHTML += `<div style="color:red;">${err.message}</div>`;
     });
 }
