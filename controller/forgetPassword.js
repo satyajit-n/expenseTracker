@@ -46,9 +46,6 @@ const forgetPassword = async (req, res, next) => {
           htmlContent: `<a href="http://localhost:3000/password/resetpassword/${id}">Click Here</a> for resetting password`,
         })
         .catch((err) => {
-          console.log(
-            "sending email error===================\n=================\n"
-          );
           console.log(err);
           throw new Error(err);
         });
@@ -64,14 +61,9 @@ const forgetPassword = async (req, res, next) => {
 
 const resetpassword = async (req, res, next) => {
   const id = req.params.id;
-  console.log("resepassword function=============", id);
   const forgotPasswordRequest = await ForgotPasswordRequests.findOne({
     where: { id: id },
   });
-  console.log(
-    "----------------------",
-    forgotPasswordRequest.dataValues.isActive
-  );
   if (forgotPasswordRequest.dataValues.isActive) {
     res.status(200).send(`<html>
                             <script>

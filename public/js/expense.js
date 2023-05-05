@@ -1,13 +1,18 @@
 const myFormExpenseAdd = document.getElementById("my-form-add-expense");
-
+const token = localStorage.getItem("token");
+const buyPremium = document.getElementById("rzp-button1");
+const premiumuser = document.getElementById("premiumuser");
+const showboard = document.getElementById("showboard");
+const downloadExpense = document.getElementById("download-expense");
+const expenseBoard = document.getElementById("expense-board");
 myFormExpenseAdd.addEventListener("submit", onsubmitExpense);
+
 function onsubmitExpense(e) {
   e.preventDefault();
 
   const amount = document.getElementById("amount").value;
   const description = document.getElementById("description").value;
   const category = document.getElementById("category").value;
-  const token = localStorage.getItem("token");
 
   // console.log(userId);
 
@@ -66,12 +71,16 @@ function showLeaderBoard(user) {
   parentEle.appendChild(childEle);
 }
 
+function showExpenseBoard(expense) {
+  const parentEle = document.getElementById("list-of-expenses");
+  const dailyExpense = document.createElement("li");
+}
+
 function showExpenseOnLoad(expense) {
   // console.log(expense.userId)
   const parentEle = document.getElementById("lisOfExpenseItem");
   const childEle = document.createElement("li");
   const delExpense = document.createElement("input");
-  const token = localStorage.getItem("token");
 
   childEle.className = "li";
 
@@ -100,8 +109,27 @@ function showExpenseOnLoad(expense) {
   };
 }
 
+function download() {
+  axios
+    .get("http://localhost:3000/user/download", {
+      headers: { Authorization: token },
+    })
+    .then((res) => {
+      if (res.status === 201) {
+        var a = document.createElement("a");
+        a.href = res.data.fileUrl;
+        a.download = "my-expense.csv";
+        a.click();
+      } else {
+        throw new Error(res.data.message);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 document.getElementById("rzp-button1").onclick = async function (e) {
-  const token = localStorage.getItem("token");
   const response = await axios.get(
     "http://localhost:3000/purchase/premiummembership",
     { headers: { Authorization: token } }
@@ -143,7 +171,6 @@ document.getElementById("rzp-button1").onclick = async function (e) {
 };
 
 document.getElementById("showboard").onclick = async function (e) {
-  const token = localStorage.getItem("token");
   await axios
     .get("http://localhost:3000/premium/showLeaderBoard", {
       headers: { Authorization: token },
@@ -158,31 +185,23 @@ document.getElementById("showboard").onclick = async function (e) {
     });
 };
 
-// function isPremium() {
-//   const token = localStorage.getItem("token");
-//   const buyPremium = document.getElementById("rzp-button1");
-//   axios
-//     .get("http://localhost:3000/user/get-user", {
-//       headers: { Authorization: token },
-//     })
-//     .then((res) => {
-//       // console.log(res.data.isPremium);
-//       if (res.data.isPremium) {
-//         buyPremium.style.display = "none";
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// }
+document.getElementById("expense-board").onclick = async function (e) {
+  try {
+    const response = await axios.get(
+      "http://localhost:3000/premium/showExpenseBoard",
+      {
+        headers: { Authorization: token },
+      }
+    );
+    console.log(response);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 window.addEventListener("DOMContentLoaded", (e) => {
   e.preventDefault();
-  // isPremium();
-  const token = localStorage.getItem("token");
-  const buyPremium = document.getElementById("rzp-button1");
-  const premiumuser = document.getElementById("premiumuser");
-  const showboard = document.getElementById("showboard");
+
   axios
     .get("http://localhost:3000/expense/get-expense", {
       headers: { Authorization: token },
@@ -202,6 +221,8 @@ window.addEventListener("DOMContentLoaded", (e) => {
       // console.log(res.data.isPremium);
       if (res.data.isPremium) {
         buyPremium.style.display = "none";
+        expenseBoard.hidden = false;
+        downloadExpense.hidden = false;
         premiumuser.hidden = false;
         showboard.hidden = false;
       }
