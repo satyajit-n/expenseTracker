@@ -16,6 +16,22 @@ const getUserLeaderBoard = async (req, res, next) => {
   }
 };
 
+const getExpenseBoard = async (req, res, next) => {
+  try {
+    const expenseBoard = await Expense.findAll({
+      attributes: ["amount", "description", "category", "createdAt"],
+      where: { userId: req.user.id },
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.status(200).json(expenseBoard);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+};
+
 module.exports = {
   getUserLeaderBoard,
+  getExpenseBoard,
 };

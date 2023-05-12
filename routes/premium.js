@@ -11,4 +11,10 @@ router.get(
   premiumFeatureController.getUserLeaderBoard
 );
 
+router.get(
+  "/showExpenseBoard",
+  authenticateMiddleware.authenticate,
+  premiumFeatureController.getExpenseBoard
+);
+
 module.exports = router;

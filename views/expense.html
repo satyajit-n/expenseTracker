@@ -70,8 +70,19 @@
         <ul class="leaderboard-user-list" id="lisOfUser"></ul>
       </div>
       <div class="container">
-        <ul id="expenseboard"></ul>
-        <ul class="expense-board-list" id="list-of-expenses"></ul>
+        <!-- <ul id="expenseboard"></ul>
+        <ul class="expense-board-list" id="list-of-expenses"></ul> -->
+        <table id="tableexpense" class="table table-striped" hidden>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="tablebody"></tbody>
+        </table>
       </div>
     </div>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

@@ -5,6 +5,7 @@ const premiumuser = document.getElementById("premiumuser");
 const showboard = document.getElementById("showboard");
 const downloadExpense = document.getElementById("download-expense");
 const expenseBoard = document.getElementById("expense-board");
+const tableExpense = document.getElementById("tableexpense");
 myFormExpenseAdd.addEventListener("submit", onsubmitExpense);
 
 function onsubmitExpense(e) {
@@ -72,8 +73,28 @@ function showLeaderBoard(user) {
 }
 
 function showExpenseBoard(expense) {
-  const parentEle = document.getElementById("list-of-expenses");
-  const dailyExpense = document.createElement("li");
+  const table = document.getElementById("tablebody");
+  tableExpense.hidden = false;
+
+  //creating single row
+  var row = table.insertRow();
+
+  //creating first cell in row & inserting data
+  var date = row.insertCell(0);
+  var d = String(expense.createdAt).replace("T", " - ");
+  date.innerHTML = d;
+
+  //creating second cell in row & inserting data
+  var description = row.insertCell(1);
+  description.innerHTML = expense.description;
+
+  //creating third cell in row & inserting data
+  var category = row.insertCell(1);
+  category.innerHTML = expense.category;
+
+  //creating fourth cell in first row & inserting data
+  var amount = row.insertCell(1);
+  amount.innerHTML = expense.amount;
 }
 
 function showExpenseOnLoad(expense) {
@@ -193,7 +214,10 @@ document.getElementById("expense-board").onclick = async function (e) {
         headers: { Authorization: token },
       }
     );
-    console.log(response);
+    // console.log(response);
+    for (var i = 0; i < response.data.length; i++) {
+      showExpenseBoard(response.data[i]);
+    }
   } catch (err) {
     console.log(err);
   }
