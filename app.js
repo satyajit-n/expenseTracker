@@ -10,6 +10,7 @@ const User = require("./models/user");
 const Expenses = require("./models/expenses");
 const Order = require("./models/orders");
 const ForgotPasswordRequests = require("./models/ForgotPasswordRequests");
+const FileUploaded = require("./models/fileUploaded");
 
 const app = express();
 app.use(cors());
@@ -38,8 +39,11 @@ Order.belongsTo(User);
 User.hasMany(ForgotPasswordRequests);
 ForgotPasswordRequests.belongsTo(User);
 
+// User.hasMany(FileUploaded);
+// FileUploaded.belongsTo(User);
+
 sequelize
-  // .sync({ force: true }) 
+  // .sync({ force: true })
   .sync()
   .then((result) => {
     app.listen(3000);

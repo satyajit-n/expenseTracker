@@ -17,4 +17,10 @@ router.get(
   premiumFeatureController.getExpenseBoard
 );
 
+router.get(
+  "/showlistofdownload",
+  authenticateMiddleware.authenticate,
+  premiumFeatureController.getListOfDownload
+);
+
 module.exports = router;

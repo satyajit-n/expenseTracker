@@ -65,6 +65,9 @@
       <button id="expense-board" class="leaderboard-button" hidden>
         Show All Expenses
       </button>
+      <button id="file-uploaded" class="leaderboard-button" hidden>
+        List of Download file
+      </button>
       <div class="container" id="premium-container">
         <ul id="leaderboard"></ul>
         <ul class="leaderboard-user-list" id="lisOfUser"></ul>
@@ -76,13 +79,17 @@
           <thead>
             <tr>
               <th>Date</th>
-              <th>Description</th>
-              <th>Category</th>
               <th>Amount</th>
+              <th>Category</th>
+              <th>Description</th>
             </tr>
           </thead>
           <tbody id="tablebody"></tbody>
         </table>
+      </div>
+      <div class="container" id="premium-container">
+        <ul id="list-of-file"></ul>
+        <ul class="leaderboard-user-list" id="list-of-download"></ul>
       </div>
     </div>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

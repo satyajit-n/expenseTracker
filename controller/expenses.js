@@ -1,6 +1,9 @@
 const Expenses = require("../models/expenses");
 const User = require("../models/user");
+const FileUploaded = require("../models/fileUploaded");
 const sequelize = require("../util/database");
+const UserServices = require("../services/UserService");
+const UploadToS3Services = require("../services/S3Services");
 
 const jwt = require("jsonwebtoken");
 
@@ -10,6 +13,25 @@ function generateAccessToken(id, name) {
     "1e1389b8ea8f785e02def4dd5783b2d0883aa2c2af4b456de19da9b8f5b0e36e"
   );
 }
+
+exports.downloadExpense = async (req, res, next) => {
+  try {
+    const expenses = await UserServices.getExpenses(req);
+    const stringFyExpenses = JSON.stringify(expenses);
+    const userId = req.user.id;
+    const filename = `Expenses${userId}/${new Date()}.txt`;
+
+    const fileUrl = await UploadToS3Services.uploadToS3(
+      stringFyExpenses,
+      filename
+    );
+    await FileUploaded.create({ URL: fileUrl, UserId: userId });
+    res.status(200).json({ fileUrl: fileUrl, success: true });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ fileUrl: "" });
+  }
+};
 
 exports.addExpense = async (req, res, next) => {
   const t = await sequelize.transaction();

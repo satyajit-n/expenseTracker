@@ -6,6 +6,7 @@ const showboard = document.getElementById("showboard");
 const downloadExpense = document.getElementById("download-expense");
 const expenseBoard = document.getElementById("expense-board");
 const tableExpense = document.getElementById("tableexpense");
+const fileUploaded = document.getElementById("file-uploaded");
 myFormExpenseAdd.addEventListener("submit", onsubmitExpense);
 
 function onsubmitExpense(e) {
@@ -68,6 +69,18 @@ function showLeaderBoard(user) {
 
   childEle.textContent =
     "Name - " + user.name + "----- Total Cost - " + user.total_cost;
+
+  parentEle.appendChild(childEle);
+}
+
+function showListOfDownload(url) {
+  const parentEle = document.getElementById("list-of-download");
+  const childEle = document.createElement("li");
+
+  childEle.className = "li";
+
+  childEle.textContent =
+    "URL => " + url.URL + "------ Created AT => " + url.createdAt;
 
   parentEle.appendChild(childEle);
 }
@@ -136,7 +149,7 @@ function download() {
       headers: { Authorization: token },
     })
     .then((res) => {
-      if (res.status === 201) {
+      if (res.status === 200) {
         var a = document.createElement("a");
         a.href = res.data.fileUrl;
         a.download = "my-expense.csv";
@@ -223,6 +236,20 @@ document.getElementById("expense-board").onclick = async function (e) {
   }
 };
 
+document.getElementById("file-uploaded").onclick = async function (e) {
+  try {
+    const response = await axios.get(
+      "http://localhost:3000/premium/showlistofdownload",
+      { headers: { Authorization: token } }
+    );
+    for (var i = 0; i < response.data.length; i++) {
+      showListOfDownload(response.data[i]);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 window.addEventListener("DOMContentLoaded", (e) => {
   e.preventDefault();
 
@@ -249,6 +276,7 @@ window.addEventListener("DOMContentLoaded", (e) => {
         downloadExpense.hidden = false;
         premiumuser.hidden = false;
         showboard.hidden = false;
+        fileUploaded.hidden = false;
       }
     })
     .catch((err) => {
