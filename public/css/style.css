@@ -204,3 +204,16 @@ input::-webkit-inner-spin-button {
   background-color: red;
   color: #f4f4f4;
 }
+.pagination {
+  display: flex;
+  list-style-type: none;
+  justify-content: center;
+  padding: 0;
+}
+.pagination li {
+  margin: 0 5px;
+  cursor: pointer;
+}
+.pagination li.active {
+  font-weight: bold;
+}
