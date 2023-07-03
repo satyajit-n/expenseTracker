@@ -7,12 +7,6 @@ const UploadToS3Services = require("../services/S3Services");
 
 const jwt = require("jsonwebtoken");
 
-function generateAccessToken(id, name) {
-  return jwt.sign(
-    { userId: id, name: name },
-    "1e1389b8ea8f785e02def4dd5783b2d0883aa2c2af4b456de19da9b8f5b0e36e"
-  );
-}
 
 exports.downloadExpense = async (req, res, next) => {
   try {

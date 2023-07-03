@@ -27,8 +27,6 @@ function onsubmitExpense(e) {
   const description = document.getElementById("description").value;
   const category = document.getElementById("category").value;
 
-  // console.log(userId);
-
   let myObj = {
     amount: amount,
     description: description,
@@ -131,7 +129,6 @@ function removeFromScreen() {
 }
 
 function showExpenseOnLoad(expense) {
-  // console.log(expense.userId)
   const parentEle = document.getElementById("lisOfExpenseItem");
   const childEle = document.createElement("li");
   const delExpense = document.createElement("input");
@@ -248,7 +245,6 @@ document.getElementById("expense-board").onclick = async function (e) {
         headers: { Authorization: token },
       }
     );
-    // console.log(response);
     for (var i = 0; i < response.data.length; i++) {
       showExpenseBoard(response.data[i]);
     }
@@ -314,50 +310,11 @@ async function getProducts(page) {
       showExpenseOnLoad(response.data.expenses[i]);
     }
     showPagination(response.data);
-
-    // console.log(data.allExpenses);
-    // const data = await response.json();
-    // return data.allExpenses;
-    // for (var i = 0; i < res.data.allExpenses.length; i++) {
-    //   showExpenseOnLoad(res.data.allExpenses[i]);
-    // }
   } catch (err) {
     console.error("Error fetching users:", err);
     throw err;
   }
 }
-
-// function renderExpenses(expenses) {
-//   const lisOfExpenses = document.getElementById("lisOfExpenseItem");
-//   lisOfExpenses.innerHTML = "";
-//   expenses.forEach((expense) => {
-//     const expenseElement = document.createElement("div");
-//     expenseElement.textContent = `${expense.amount} - ${expense.description} - ${expense.category}`;
-//     lisOfExpenses.appendChild(expenseElement);
-//   });
-// }
-
-// function renderPagination(totalPages) {
-//   pagination.innerHTML = "";
-
-//   for (let page = 1; page <= totalPages; page++) {
-//     const li = document.createElement("li");
-//     li.textContent = page;
-//     if (page === currentPage) {
-//       li.classList.add("active");
-//     }
-//     li.addEventListener("click", () => {
-//       currentPage = page;
-//       fetchAndRenderData();
-//     });
-//     pagination.appendChild(li);
-//   }
-// }
-
-// async function fetchAndRenderData() {
-//   const expense = await getProducts(currentPage);
-//   renderExpenses(expense);
-// }
 
 async function getUsers() {
   try {
