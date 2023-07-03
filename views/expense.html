@@ -55,6 +55,18 @@
       </form>
 
       <div class="container">
+        <form>
+          <label for="expenseshow">
+            Select How many expenses you want to see:</label
+          >
+          <select name="expenseshow" id="expenseshow">
+            <option value="3">3</option>
+            <option value="6">6</option>
+            <option value="9">9</option>
+            <option value="12">12</option>
+          </select>
+          <input  type="submit" value="Submit" id="itemButton" />
+        </form>
         <h6>Expense List</h6>
         <ul id="expenses"></ul>
         <ul class="expense-item" id="lisOfExpenseItem"></ul>

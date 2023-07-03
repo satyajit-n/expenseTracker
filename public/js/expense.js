@@ -13,6 +13,13 @@ myFormExpenseAdd.addEventListener("submit", onsubmitExpense);
 let currentPage = 1;
 const resultsPerPage = 2;
 
+const item = document.getElementById("itemButton");
+item.addEventListener("click", () => {
+  const itemNo = document.getElementById("expenseshow").value;
+  const itemNumeric = Number(itemNo);
+  localStorage.setItem("itemNo", itemNumeric);
+});
+
 function onsubmitExpense(e) {
   e.preventDefault();
 
@@ -294,14 +301,14 @@ function showPagination({
 
 async function getProducts(page) {
   try {
+    const finalItemNo = localStorage.getItem("itemNo");
     const response = await axios.get(
       `http://localhost:3000/expense/get-expense?page=${page}`,
       {
         headers: { Authorization: token },
-        params: { ITEMS_PER_PAGE: 3 },
+        params: { ITEMS_PER_PAGE: finalItemNo },
       }
     );
-    console.log(response);
     removeFromScreen();
     for (let i = 0; i < response.data.expenses.length; i++) {
       showExpenseOnLoad(response.data.expenses[i]);
