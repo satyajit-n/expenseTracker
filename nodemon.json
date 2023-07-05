@@ -1,9 +1,0 @@
-{
-  "env": {
-    "RAZORPAY_KEY_ID": "rzp_test_S9V9VgqngWz7Hl",
-    "RAZORPAY_KEY_SECRET": "ApnIbQkUWoOEeUambMRhB51Z",
-    "SENDINBLUE_API_KEY": "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",
-    "IAM_USER_KEY": "AKIAXSLGME2CLTTUEWXW",
-    "PORT": "3000"
-  }
-}
